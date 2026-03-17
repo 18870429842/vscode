@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>高先森 · 30岁生日快乐 🎂</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  width:100vw;height:100vh;
+  background:linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffd6a5 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow:hidden;position:relative;
+}
+
+.fall-cakes{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;z-index:1;
+}
+
+.main{
+  position:relative;z-index:10;
+  text-align:center;padding:0 25px;
+  opacity:0;animation:pageIn 1.2s ease forwards 0.4s;
+  width:100%;max-width:380px;
+}
+
+/* 首页文字 可爱循环跳动动画 */
+.title{
+  font-size:40px;color:#ff5c8d;
+  text-shadow:0 0 15px #fff;
+  margin-bottom:6px;
+  animation: textBounce 2.2s infinite ease-in-out;
+}
+.name-age{
+  font-size:28px;color:#ff477e;
+  font-weight:bold;
+  margin-bottom:48px;
+  animation: textPulse 2.5s infinite ease-in-out;
+}
+.wish{
+  margin-top:26px;font-size:22px;color:#ff477e;
+  line-height:1.6;font-weight:bold;
+  animation: textFloat 3s infinite ease-in-out;
+}
+
+/* 文字动画 */
+@keyframes textBounce {
+  0%,100%{transform: translateY(0);}
+  50%{transform: translateY(-5px) scale(1.03);}
+}
+@keyframes textPulse {
+  0%,100%{transform: scale(1); opacity: 0.9;}
+  50%{transform: scale(1.04); opacity: 1;}
+}
+@keyframes textFloat {
+  0%,100%{transform: translateY(0);}
+  50%{transform: translateY(-4px);}
+}
+
+/* 彩色精致蛋糕 */
+.cake{
+  width:170px;margin:0 auto;
+  position:relative;
+  animation:float 3s infinite ease-in-out;
+  transform-origin:center bottom;
+  filter:drop-shadow(0 10px 20px rgba(255,154,139,0.4));
+}
+.cake-layer{
+  width:170px;height:50px;
+  background:linear-gradient(to bottom, #ffc4d6, #ffb3c1);
+  border-radius:10px;
+  position:relative;margin:0 auto;
+  border-top:4px solid #ff8cc0;
+}
+.cake-layer.bottom{
+  height:55px;
+  background:linear-gradient(to bottom, #ffb3c1, #ff9ebb);
+  border-radius:10px 10px 50px 50px;
+}
+.cream{
+  width:100%;height:16px;
+  background:#ffd7e1;border-radius:50px;
+  position:absolute;top:-8px;
+}
+.cream-wave{
+  position:absolute;top:-6px;left:0;right:0;
+  display:flex;justify-content:center;gap:4px;
+}
+.cream-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#ff7aa2;
+}
+.strawberry{
+  position:absolute;width:12px;height:18px;
+  background:#ff477e;border-radius:50%;
+  top:-12px;
+}
+.strawberry:nth-child(1){left:20px;}
+.strawberry:nth-child(2){right:20px;}
+.strawberry::after{
+  content:"";position:absolute;top:-3px;left:50%;transform:translateX(-50%);
+  width:4px;height:6px;background:#4ade80;border-radius:2px;
+}
+
+.candle{
+  width:9px;height:28px;
+  background:#ff8fa3;
+  border-radius:4px;
+  position:absolute;
+  top:-30px;
+  left:50%;transform:translateX(-50%);
+}
+.flame{
+  width:16px;height:20px;
+  background:#ffd972;
+  border-radius:50%;
+  position:absolute;
+  top:-20px;left:50%;transform:translateX(-50%);
+  box-shadow:0 0 15px #ff9a8b, 0 0 30px #ffd972;
+  animation:flame 0.7s infinite alternate, glow 1.5s infinite alternate;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-8px) scale(1.02);}
+}
+@keyframes flame{
+  from{transform:translateX(-50%) scale(1);}
+  to{transform:translateX(-50%) scale(1.2);}
+}
+@keyframes glow{
+  from{opacity:0.8;}
+  to{opacity:1;}
+}
+
+.input-box{
+  margin-top:22px;width:100%;
+}
+#inputText{
+  width:100%;
+  padding:14px 16px;
+  border-radius:50px;
+  border:none;outline:none;
+  font-size:16px;text-align:center;
+  background:#fff;color:#333;
+  margin-bottom:10px;
+}
+button{
+  padding:12px 24px;
+  border-radius:50px;
+  border:none;
+  background:#ff5c8d;color:#fff;
+  font-size:16px;font-weight:bold;
+}
+.tip{
+  font-size:14px;color:#ff477e;
+  margin-top:6px;
+  animation:blink 1s infinite alternate;
+}
+
+/* ====================== 爱心弹窗 渐变炫酷背景 + 8秒关闭 + 跳动 ====================== */
+.modal-heart{
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  width:340px; height:340px;
+  /* 爱心渐变背景：超炫酷 */
+  background: linear-gradient(135deg, #ff5e99, #ff296d, #c0357e, #ff70a6);
+  clip-path: path("M170 65 C110 0 0 55 0 140 C0 225 170 290 170 290 C170 290 340 225 340 140 C340 55 230 0 170 65 Z");
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  z-index:9998;text-align:center;
+  color:#fff;
+  padding:30px;
+  transition:all 0.5s ease;
+  opacity:0;visibility:hidden;
+}
+.modal-heart.active{
+  opacity:1;visibility:visible;
+  transform:translate(-50%,-50%) scale(1);
+  animation: heartBeat 1.2s infinite ease-in-out;
+}
+@keyframes heartBeat {
+  0%,100%{ transform: translate(-50%,-50%) scale(1); }
+  50%{ transform: translate(-50%,-50%) scale(1.05); }
+}
+.heart-blink{font-size:50px;animation:blink 0.6s infinite alternate;margin-bottom:15px;}
+.modal-heart h2{font-size:24px;margin-bottom:12px;}
+.modal-heart p{font-size:15px;line-height:1.7;}
+.close-heart{
+  margin-top:15px;padding:2px 6px;
+  background: rgba(238, 222, 222, 0.4);color:#eab9cb;
+  border:none;border-radius:30px;font-size:12px;font-weight:500;
+}
+
+/* ====================== 抽奖弹窗 最高层级 + 不被遮挡 ====================== */
+.modal-lottery{
+  position:fixed;top:0;left:0;
+  width:100vw;height:100vh;
+  background:rgba(0,0,0,0.85);
+  display:none;align-items:center;justify-content:center;
+  z-index:9999;
+}
+.modal-lottery.active{display:flex;}
+.lottery-box{background:#fff;width:340px;border-radius:24px;padding:24px;text-align:center;}
+.lottery-box h3{color:#ff477e;margin-bottom:14px;font-size:20px;}
+.wheel-box{position:relative;width:280px;height:280px;margin:0 auto;}
+.wheel{
+  width:100%;height:100%;border-radius:50%;border:6px solid #fff;
+  background:conic-gradient(#ff85a1 0 72deg,#ffb380 72deg 144deg,#f9d423 144deg 216deg,#4ade80 216deg 288deg,#60a5fa 288deg 360deg);
+  transition: transform 0s linear;
+}
+.wheel.spin {
+  transition: transform 8.5s cubic-bezier(0.08, 0.15, 0.1, 1);
+}
+.wheel .item{
+  position:absolute;width:60px;height:140px;left:50%;margin-left:-30px;
+  text-align:center;color:#fff;font-size:27px;font-weight:bold;
+  transform-origin:center bottom;padding-top:24px;
+}
+.pointer{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  width:14px;height:44px;background:#fff;border:2px solid #222;border-radius:6px;z-index:10;
+}
+#result{margin-top:18px;font-size:24px;font-weight:bold;color:#ff477e;min-height:30px;}
+#spinBtn{margin-top:10px;padding:12px 24px;background:#ff5c8d;color:#fff;border:none;border-radius:50px;font-size:16px;}
+#closeWheel{margin-top:8px;padding:10px 20px;background:#666;color:#fff;border:none;border-radius:50px;}
+
+.mini-cake{
+  position:absolute;width:22px;height:22px;
+  /* background:#ff8fa3; */
+  border-radius:4px;opacity:0.9;
+  animation:fall linear infinite;
+}
+@keyframes blink{from{opacity:0.6;scale:1;}to{opacity:1;scale:1.2;}}
+@keyframes pageIn{from{opacity:0;transform:scale(0.7) translateY(40px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes fall{0%{transform:translateY(-10px) rotate(0deg)}100%{transform:translateY(100vh) rotate(720deg)}}
+</style>
+</head>
+
+<body>
+<audio id="bgMusic" loop>
+  <source src="https://music.123tool.cn/music/%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90%E6%AD%8C%E9%99%90%E7%89%88.mp3" type="audio/mpeg">
+</audio>
+
+<div class="fall-cakes" id="fallCakes"></div>
+
+<div class="main">
+  <div class="title">生日快乐 🎉</div>
+  <div class="name-age">高先森 · 30岁</div>
+  
+  <div class="cake">
+    <div class="strawberry"></div><div class="strawberry"></div>
+    <div class="cream-wave">
+      <div class="cream-dot"></div><div class="cream-dot"></div><div class="cream-dot"></div><div class="cream-dot"></div><div class="cream-dot"></div>
+    </div>
+    <div class="cream"></div>
+    <div class="cake-layer"></div>
+    <div class="cream-wave">
+      <div class="cream-dot"></div><div class="cream-dot"></div><div class="cream-dot"></div><div class="cream-dot"></div><div class="cream-dot"></div>
+    </div>
+    <div class="cream"></div>
+    <div class="cake-layer bottom"></div>
+    <div class="candle"><div class="flame"></div></div>
+  </div>
+
+  <div class="wish">三十而立 前程似锦<br>平安喜乐 万事胜意</div>
+
+  <div class="input-box">
+    <input type="text" id="inputText" placeholder="输入口令有惊喜哦✨">
+    <button onclick="checkInput()">确认触发</button>
+    <div class="tip">口令：今天我是寿星哦 / 爱我的老婆</div>
+  </div>
+</div>
+
+<!-- 爱心弹窗 -->
+<div class="modal-heart" id="modalHeart">
+  <!-- <div class="heart-blink">❤️</div> -->
+  <h2>祝我的寿星生日快乐</h2>
+  <p>
+    高先森，30岁快乐！<br>
+    愿你平安无疾，喜乐常伴<br>
+    所求皆如愿，所行皆坦途<br>
+    岁岁常欢愉，年年皆胜意<br>
+    未来可期，余生有我
+  </p >
+  <button class="close-heart" onclick="closeHeart()">关闭</button>
+</div>
+
+<!-- 抽奖弹窗 -->
+<div class="modal-lottery" id="modalLottery">
+  <div class="lottery-box">
+    <h3>老婆送你的现金红包 🧧</h3>
+    <div class="wheel-box">
+      <div class="pointer"></div>
+      <div class="wheel" id="wheel">
+        <div class="item" style="transform:rotate(36deg)">5.20</div>
+        <div class="item" style="transform:rotate(108deg)">520</div>
+        <div class="item" style="transform:rotate(180deg)">999</div>
+        <div class="item" style="transform:rotate(252deg)">1314</div>
+        <div class="item" style="transform:rotate(324deg)">5200</div>
+      </div>
+    </div>
+    <div id="result">等待抽奖...</div>
+    <button id="spinBtn" onclick="startWheel()">开始抽奖 🧧</button>
+    <button id="closeWheel" onclick="closeWheel()">关闭</button>
+  </div>
+</div>
+
+<script>
+const bgMusic = document.getElementById('bgMusic');
+function playMusic(){bgMusic.play().catch(err=>{});}
+
+const fallCakes = document.getElementById("fallCakes");
+function createMiniCake(){
+  const cake=document.createElement("div");cake.className="mini-cake";
+  cake.innerText = '❤️';
+  cake.style.left=Math.random()*100+"%";
+  cake.style.animationDuration=(Math.random()*4+3)+"s";
+  fallCakes.appendChild(cake);
+  setTimeout(()=>cake.remove(),7000);
+}
+setInterval(createMiniCake,300);
+
+let heartTimer=null;
+
+// ========== 修复：两个口令分开触发 ==========
+function checkInput(){
+  playMusic();
+  const val=document.getElementById("inputText").value.trim();
+
+  if(val === "今天我是寿星哦"){
+    // 只弹爱心
+    document.getElementById("modalHeart").classList.add("active");
+    if(heartTimer) clearTimeout(heartTimer);
+    heartTimer = setTimeout(()=>{closeHeart();},8000);
+  }else if(val === "爱我的老婆"){
+    // 只弹抽奖
+    const record = localStorage.getItem("lotteryResult");
+    // if(record){
+    //   alert(`你已经抽过奖啦！\n奖品：🧧 ${record} 元`);
+    //   return;
+    // }
+    document.getElementById("modalLottery").classList.add("active");
+  }else{
+    alert("请输入正确口令哦～");
+  }
+  document.getElementById("inputText").value = "";
+}
+
+function closeHeart(){
+  document.getElementById("modalHeart").classList.remove("active");
+  if(heartTimer) clearTimeout(heartTimer);
+}
+
+// 抽奖动画
+function startWheel(){
+  const wheel=document.getElementById("wheel");
+  const result=document.getElementById("result");
+  const spinBtn=document.getElementById("spinBtn");
+  // const hasDraw=localStorage.getItem("lotteryResult");
+  
+  // if(hasDraw){
+  //   alert(`你已经抽过奖啦！\n奖品：🧧 ${hasDraw} 元`);
+  //   spinBtn.disabled=true;spinBtn.innerText="已抽奖";
+  //   return;
+  // }
+
+  spinBtn.disabled=true;spinBtn.innerText="抽奖中...";
+  document.getElementById("result").innerText="抽奖进行中...";
+  wheel.classList.remove("spin");
+  wheel.style.transform="rotate(0deg)";
+  
+  const prizeList=[5.2,520,999,1314];
+  // const prizeList=[5200];  // 指定抽中5200
+  const win=prizeList[Math.floor(Math.random()*prizeList.length)];
+  const prizeDeg={5.20:324,520:252,999:180,1314:108,5200:36};
+
+  setTimeout(()=>{
+    wheel.classList.add("spin");
+    const finalDeg=prizeDeg[win]+2520;
+    wheel.style.transform=`rotate(${finalDeg}deg)`;
+
+    setTimeout(()=>{
+      result.innerText=`恭喜抽中 🧧 ${win} 元`;
+      localStorage.setItem("lotteryResult",win);
+      spinBtn.innerText="已完成抽奖";
+    },8500);
+  },20);
+}
+
+function closeWheel(){
+  document.getElementById("modalLottery").classList.remove("active");
+  document.getElementById("result").innerText="等待抽奖...";
+  document.getElementById("wheel").classList.remove("spin");
+  document.getElementById("wheel").style.transform="rotate(0deg)";
+  
+  const spinBtn=document.getElementById("spinBtn");
+  // 改成可一直抽奖
+  // if(localStorage.getItem("lotteryResult")){
+  //   spinBtn.innerText="已完成抽奖";spinBtn.disabled=true;
+  // }else{
+  //   spinBtn.innerText="开始抽奖 🧧";spinBtn.disabled=false;
+  // }
+  spinBtn.innerText="开始抽奖 🧧";spinBtn.disabled=false;
+}
+</script>
+</body>
+</html>
